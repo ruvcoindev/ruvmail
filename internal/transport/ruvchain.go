@@ -77,7 +77,7 @@ func NewRuvchainTransport(log *log.Logger, sk ed25519.PrivateKey, pk ed25519.Pub
 		for _, peer := range peers {
 			options = append(options, core.Peer{URI: peer})
 		}
-		if ygg, err = core.New(cfg.Certificate, glog, options...); err != nil {
+		if ruv, err = core.New(cfg.Certificate, glog, options...); err != nil {
 			panic(err)
 		}
 	}
