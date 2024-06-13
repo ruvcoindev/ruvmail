@@ -1,6 +1,7 @@
 /*
- *  Copyright (c) 2021 Neil Alexander
- *   Copyright (c) 2024 ruvcoindev
+*  Copyright (c) 2021 Neil Alexander
+ *  Copyright (c) 2024 ruvcoindev
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -62,7 +63,7 @@ func (s *SessionRemote) Data(r io.Reader) error {
 	}
 
 	m.Header.Add(
-		"Received", fmt.Sprintf("from Ruvmail %s; %s",
+		"Received", fmt.Sprintf("from ruvmail %s; %s",
 			hex.EncodeToString(s.public),
 			time.Now().String(),
 		),

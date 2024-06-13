@@ -1,6 +1,7 @@
 /*
- *  Copyright (c) 2021 Neil Alexander
+*  Copyright (c) 2021 Neil Alexander
  *  Copyright (c) 2024 ruvcoindev
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -48,19 +49,19 @@ func (i *peerAddrList) Set(value string) error {
 func main() {
 	rawlog := log.New(color.Output, "", 0)
 	green := color.New(color.FgGreen).SprintfFunc()
-	log := log.New(rawlog.Writer(), fmt.Sprintf("[  %s  ] ", green("Ruvmail")), log.LstdFlags|log.Lmsgprefix)
+	log := log.New(rawlog.Writer(), fmt.Sprintf("[  %s  ] ", green("ruvmail")), log.LstdFlags|log.Lmsgprefix)
 
 	var peerAddrs peerAddrList
 	database := flag.String("database", "ruvmail.db", "SQLite database file")
-	smtpaddr := flag.String("smtp", "localhost:1025", "SMTP listen address")
-	imapaddr := flag.String("imap", "localhost:1143", "IMAP listen address")
+	smtpaddr := flag.String("smtp", "localhost:2025", "SMTP listen address")
+	imapaddr := flag.String("imap", "localhost:2024", "IMAP listen address")
 	multicast := flag.Bool("multicast", false, "Connect to Ruvchain peers on your LAN")
 	password := flag.Bool("password", false, "Set a new IMAP/SMTP password")
 	flag.Var(&peerAddrs, "peer", "Connect to a specific Ruvchain static peer (this option can be given more than once)")
 	flag.Parse()
 
 	if flag.NFlag() == 0 {
-		fmt.Println("Ruvmail must be started with either one or more Ruvchain peers")
+		fmt.Println("ruvmail must be started with either one or more Ruvchain peers")
 		fmt.Println("specified, multicast enabled, or both.")
 		fmt.Println()
 		fmt.Println("Available options:")

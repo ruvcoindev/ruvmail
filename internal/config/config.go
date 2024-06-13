@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021 Neil Alexander 
+*  Copyright (c) 2021 Neil Alexander
  *  Copyright (c) 2024 ruvcoindev
  *
  *  This Source Code Form is subject to the terms of the Mozilla Public

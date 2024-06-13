@@ -1,6 +1,7 @@
 /*
- *  Copyright (c) 2021 Neil Alexander
+*  Copyright (c) 2021 Neil Alexander
  *  Copyright (c) 2024 ruvcoindev
+ *
  *  This Source Code Form is subject to the terms of the Mozilla Public
  *  License, v. 2.0. If a copy of the MPL was not distributed with this
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -31,21 +32,21 @@ import (
 
 type RuvchainTransport struct {
 	listener   *quic.Listener
-	ruvchain  net.PacketConn
+	Ruvchain  net.PacketConn
 	transport  *quic.Transport
 	tlsConfig  *tls.Config
 	quicConfig *quic.Config
-	incoming   chan *ruvchainSession
+	incoming   chan *RuvchainSession
 	sessions   sync.Map // string -> quic.Connection
-	dials      sync.Map // string -> *ruvchainDial
+	dials      sync.Map // string -> *RuvchainDial
 }
 
-type ruvchainSession struct {
+type RuvchainSession struct {
 	quic.Connection
 	quic.Stream
 }
 
-type ruvchainDial struct {
+type RuvchainDial struct {
 	context.Context
 	context.CancelFunc
 }
@@ -111,8 +112,8 @@ func NewRuvchainTransport(log *log.Logger, sk ed25519.PrivateKey, pk ed25519.Pub
 		transport: &quic.Transport{
 			Conn: ruv,
 		},
-		ruvchain: ruv,
-		incoming:  make(chan *ruvchainSession, 1),
+		Ruvchain: ruv,
+		incoming:  make(chan *RuvchainSession, 1),
 	}
 
 	if tr.listener, err = tr.transport.Listen(tr.tlsConfig, tr.quicConfig); err != nil {
@@ -137,7 +138,7 @@ func (t *RuvchainTransport) connectionAcceptLoop() {
 		}
 		t.sessions.Store(host, qc)
 		if dial, ok := t.dials.LoadAndDelete(host); ok {
-			dial := dial.(*ruvchainDial)
+			dial := dial.(*RuvchainDial)
 			dial.CancelFunc()
 		}
 
@@ -156,7 +157,7 @@ func (t *RuvchainTransport) streamAcceptLoop(qc quic.Connection) {
 		if err != nil {
 			break
 		}
-		t.incoming <- &ruvchainSession{qc, qs}
+		t.incoming <- &RuvchainSession{qc, qs}
 	}
 }
 
@@ -168,13 +169,13 @@ retry:
 	qc, ok := t.sessions.Load(host)
 	if !ok {
 		if dial, ok := t.dials.Load(host); ok {
-			<-dial.(*ruvchainDial).Done()
+			<-dial.(*RuvchainDial).Done()
 		}
 		if qc, ok = t.sessions.Load(host); !ok {
 			dialctx, dialcancel := context.WithCancel(ctx)
 			defer dialcancel()
 
-			t.dials.Store(host, &ruvchainDial{dialctx, dialcancel})
+			t.dials.Store(host, &RuvchainDial{dialctx, dialcancel})
 			defer t.dials.Delete(host)
 
 			addr := make(iwt.Addr, ed25519.PublicKeySize)
@@ -207,29 +208,29 @@ retry:
 		}
 		// For some reason this is needed to kick the stream
 		_, err = qs.Write([]byte(" "))
-		return &ruvchainSession{qc, qs}, err
+		return &RuvchainSession{qc, qs}, err
 	}
 }
 
 func (t *RuvchainTransport) Listener() net.Listener {
-	return &ruvchainListener{t}
+	return &RuvchainListener{t}
 }
 
-type ruvchainListener struct {
+type RuvchainListener struct {
 	*RuvchainTransport
 }
 
-func (t *ruvchainListener) Accept() (net.Conn, error) {
+func (t *RuvchainListener) Accept() (net.Conn, error) {
 	return <-t.incoming, nil
 }
 
-func (t *ruvchainListener) Addr() net.Addr {
+func (t *RuvchainListener) Addr() net.Addr {
 	return t.listener.Addr()
 }
 
-func (t *ruvchainListener) Close() error {
+func (t *RuvchainListener) Close() error {
 	if err := t.listener.Close(); err != nil {
 		return err
 	}
-	return t.ruvchain.Close()
+	return t.Ruvchain.Close()
 }
