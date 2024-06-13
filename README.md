@@ -4,7 +4,7 @@ It's email, but not as you know it.
 
 ## Introduction
 
-ruvmail is a single-binary all-in-one mail transfer agent which sends and receives email natively over the [Ruvchain Network](https://Ruvchain-network.github.io/).
+ruvmail is a single-binary all-in-one mail transfer agent which sends and receives email natively over the [Ruvchain Network](https://ruvcoindev.github.io/).
 
 * ruvmail runs just about anywhere you like — your inbox is stored right on your own machine;
 * Implements IMAP and SMTP protocols for sending and receiving mail, so you can use your favourite client (hopefully);
@@ -12,7 +12,7 @@ ruvmail is a single-binary all-in-one mail transfer agent which sends and receiv
 * All mail exchange traffic between any two ruvmail nodes is always end-to-end encrypted without exception;
 * Ruvchain and ruvmail nodes on the same network are discovered automatically using multicast or you can configure a static Ruvchain peer.
 
-Email addresses are based on your public key, like `89cd1ea25d99b8ccf29e454280313128c234ffb82aa0eb2e3496f6f156d063d0@ruvmail`.
+Email addresses are based on your public key, like `dc754c82fea167e6a5170bc86e31a9455c4ad91895c343319c006f6da1cdc87e@ruvmail`.
 
 ## Why?
 
@@ -40,7 +40,7 @@ Create a mailbox and set your password. Your ruvmail database will automatically
 ruvmail -password
 ```
 
-Start ruvmail, using the database in your working directory, with either multicast enabled, an [Ruvchain static peer](https://publicpeers.neilalexander.dev/) specified or both:
+Start ruvmail, using the database in your working directory, with either multicast enabled, an [Ruvchain static peer](https://github.com/ruvcoindev/public-peers) specified or both:
 
 ```
 ruvmail -multicast
@@ -52,8 +52,8 @@ Your mail address will be printed in the log at startup. You will also use this 
 
 Connect your mail client to ruvmail. In the above example:
 
-* SMTP is listening on `localhost` port 1025, username is your mail address, plain password authentication, no SSL/TLS
-* IMAP is listening on `localhost` port 1143, username is your mail address, plain password authentication, no SSL/TLS
+* SMTP is listening on `localhost` port 2025, username is your mail address, plain password authentication, no SSL/TLS
+* IMAP is listening on `localhost` port 2024, username is your mail address, plain password authentication, no SSL/TLS
 
 Then try sending a mail to another ruvmail user!
 
@@ -61,7 +61,7 @@ Then try sending a mail to another ruvmail user!
 
 The following command line switches are supported by the `ruvmail` binary:
 
-* `-peer=tls://...` or `-peer=tcp://...` — connect to a specific Ruvchain node, like one of the [Public Peers](https://publicpeers.neilalexander.dev/);
+* `-peer=tls://...` or `-peer=tcp://...` — connect to a specific Ruvchain node, like one of the [Public Peers](https://github.com/ruvcoindev/public-peers);
 * `-multicast` - enable multicast peer discovery for Ruvchain nodes on your LAN
 * `-database=/path/to/ruvmail.db` — use a specific database file;
 * `-smtp=listenaddr:port` — listen for SMTP on a specific address/port
