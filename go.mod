@@ -15,7 +15,7 @@ require (
 	github.com/gologme/log v1.3.0
 	github.com/mattn/go-sqlite3 v1.14.17
 	github.com/quic-go/quic-go v0.44.0
-	github.com/ruvcoindev/ruvchain-go v0.5.6
+	github.com/ruvcoindev/ruvchain-go v0.5.9
 	go.uber.org/atomic v1.11.0
 	golang.org/x/crypto v0.23.0
 	golang.org/x/term v0.20.0
