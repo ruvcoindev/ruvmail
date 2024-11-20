@@ -25,7 +25,7 @@ Ruvchain is well-suited for ad-hoc mail delivery and allows ruvmail to work even
 Use a recent version of Go to install ruvmail:
 
 ```
-go install github.com/ruvcoindev/ruvmail/cmd/ruvmail@latest
+go install github.com/ruvcoindev/ruvmail/cmd/ruvmail
 ```
 
 It will then be installed into your `GOPATH`, so add that to your environment:
