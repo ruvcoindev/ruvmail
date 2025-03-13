@@ -4,7 +4,7 @@ It's email, but not as you know it.
 
 ## Introduction
 
-ruvmail is a single-binary all-in-one mail transfer agent which sends and receives email natively over the [Ruvchain Network](https://ruvcoindev.github.io/).
+ruvmail is a single-binary all-in-one mail transfer agent which sends and receives email natively over the [Ruvchain Network](https://ruvcha.in/).
 
 * ruvmail runs just about anywhere you like — your inbox is stored right on your own machine;
 * Implements IMAP and SMTP protocols for sending and receiving mail, so you can use your favourite client (hopefully);
